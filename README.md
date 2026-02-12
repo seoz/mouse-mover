@@ -40,7 +40,9 @@ Run the following command in your terminal (with the virtual environment activat
 ```bash
 python macos/mouse_mover.py
 ```
-To stop the script, press `CTRL+C` in the terminal.
+To stop the script:
+1.  Look for the **Mouse Mover** icon (blue square) in your menu bar (top-right corner).
+2.  Click the icon and select **Exit**.
 
 ### Windows
 Run the following command in Command Prompt or PowerShell (with the virtual environment activated):
