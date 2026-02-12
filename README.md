@@ -70,6 +70,8 @@ You can package the application into a standalone executable that does not requi
     ```
 3.  The executable will be created at `dist\MouseMover.exe`.
 
+**Important**: You must run this build script on a Windows machine. Running it on macOS or Linux will not produce a valid Windows executable. If you are developing on macOS/Linux and need a Windows executable, use the provided GitHub Actions workflow (.github/workflows/build.yml) to generate one automatically.
+
 ## Troubleshooting
 
 -   **"ModuleNotFoundError: No module named 'pyautogui'"**: Ensure you have activated your virtual environment and installed the requirements.
