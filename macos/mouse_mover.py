@@ -7,9 +7,9 @@ def move_mouse():
     print("Mouse Mover Started (Press Ctrl+C to stop)")
     try:
         while True:
-            # Generate random x and y offsets between -5 and 5
-            x_offset = random.randint(-5, 5)
-            y_offset = random.randint(-5, 5)
+            # Generate random x and y offsets between -10 and 10
+            x_offset = random.randint(-10, 10)
+            y_offset = random.randint(-10, 10)
             
             # Move the mouse relative to its current position
             pyautogui.moveRel(x_offset, y_offset)

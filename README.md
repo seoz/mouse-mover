@@ -1,6 +1,6 @@
 # Automatic Mouse Mover
 
-This tool automatically moves your mouse cursor 5 pixels in a random direction every 5 seconds. It is designed to simulate user activity on Windows and macOS.
+This tool automatically moves your mouse cursor 10 pixels in a random direction every 5 seconds. It is designed to simulate user activity on Windows and macOS.
 
 ## Prerequisites
 
@@ -49,30 +49,29 @@ python windows\mouse_mover.py
 ```
 To stop the script, press `CTRL+C`.
 
-## Building a Standalone Executable (Optional)
+## Building a Standalone Executable
 
-If you want to create a standalone executable (e.g., `.exe` or `.app`) that doesn't require Python to be installed, you can use `pyinstaller`.
+You can package the application into a standalone executable that does not require Python to be installed on the target machine.
 
-1.  **Install PyInstaller:**
+### macOS Build
+1.  Open your terminal in the project directory.
+2.  Run the build script:
     ```bash
-    pip install pyinstaller
+    ./build_macos.sh
     ```
+3.  The application will be created at `dist/MouseMover.app`.
+4.  **Note**: Upon first launch, macOS may ask for accessibility permissions. Grant them to `MouseMover.app` in `System Settings` -> `Privacy & Security` -> `Accessibility`.
 
-2.  **Build the Executable:**
-    -   **macOS:**
-        ```bash
-        pyinstaller --onefile --noconsole --name "MouseMover" macos/mouse_mover.py
-        ```
-        The app will be in the `dist/` folder. Note: You may need to grant accessibility permissions to the app.
-
-    -   **Windows:**
-        ```cmd
-        pyinstaller --onefile --noconsole --name "MouseMover" windows\mouse_mover.py
-        ```
-        The `.exe` file will be in the `dist/` folder.
+### Windows Build
+1.  Open Command Prompt or PowerShell in the project directory.
+2.  Run the build script:
+    ```cmd
+    build_windows.bat
+    ```
+3.  The executable will be created at `dist\MouseMover.exe`.
 
 ## Troubleshooting
 
 -   **"ModuleNotFoundError: No module named 'pyautogui'"**: Ensure you have activated your virtual environment and installed the requirements.
--   **Permissions (macOS)**: macOS requires you to grant "Accessibility" permissions to the terminal or the application controlling the mouse. Go to `System Settings` -> `Privacy & Security` -> `Accessibility` and enable the terminal (e.g., Terminal, iTerm) or the compiled app.
+-   **Permissions (macOS)**: macOS requires you to grant "Accessibility" permissions to the terminal or the application controlling the mouse.
 -   **Fail Safe Triggered**: If you move the mouse to any corner of the screen, the script will automatically stop for safety.
