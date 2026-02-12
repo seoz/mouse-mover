@@ -3,6 +3,9 @@ import time
 import random
 import sys
 import threading
+import json
+import os
+import subprocess
 from pystray import Icon, MenuItem, Menu
 from PIL import Image, ImageDraw
 
@@ -20,20 +23,46 @@ def create_image():
     dc.rectangle((16, 16, 48, 48), fill=(0, 120, 215)) 
     return image
 
+
+def get_config_path():
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.json")
+
+def load_settings():
+    defaults = {"interval": 5, "distance": 10}
+    path = get_config_path()
+    try:
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                data = json.load(f)
+                return {**defaults, **data}
+    except Exception as e:
+        print(f"Error loading settings: {e}")
+    return defaults
+
+def on_settings(icon, item):
+    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings_ui.py")
+    subprocess.Popen([sys.executable, script_path])
+
 def move_mouse_thread(icon):
     print("Mouse Mover Started")
     try:
         while not stop_event.is_set():
-            # Generate random x and y offsets between -10 and 10
-            x_offset = random.randint(-10, 10)
-            y_offset = random.randint(-10, 10)
+            # Load settings
+            settings = load_settings()
+            interval = settings.get("interval", 5)
+            distance_range = settings.get("distance", 10)
+
+            # Generate random x and y offsets
+            x_offset = random.randint(-distance_range, distance_range)
+            y_offset = random.randint(-distance_range, distance_range)
             
             # Move the mouse relative to its current position
             pyautogui.moveRel(x_offset, y_offset)
             print(f"Moved mouse by ({x_offset}, {y_offset})")
             
-            # Wait for 5 seconds, checking stop_event frequently
-            for _ in range(50):  # Check every 0.1s for 5 seconds
+            # Wait for interval seconds, checking stop_event frequently
+            steps = int(max(1, interval) / 0.1)
+            for _ in range(steps):
                 if stop_event.is_set():
                     break
                 time.sleep(0.1)
@@ -50,7 +79,10 @@ def on_exit(icon, item):
 
 def run_app():
     image = create_image()
-    menu = Menu(MenuItem('Exit', on_exit))
+    menu = Menu(
+        MenuItem('Settings', on_settings),
+        MenuItem('Exit', on_exit)
+    )
     # On macOS, the title might appear next to the icon or in the menu
     icon = Icon("MouseMover", image, "Mouse Mover", menu)
     
