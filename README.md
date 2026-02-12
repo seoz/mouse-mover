@@ -47,7 +47,11 @@ Run the following command in Command Prompt or PowerShell (with the virtual envi
 ```cmd
 python windows\mouse_mover.py
 ```
-To stop the script, press `CTRL+C`.
+To stop the script:
+1.  Look for the **Mouse Mover** icon (blue square) in your system tray (bottom-right corner via the arrow ^).
+2.  Right-click the icon and select **Exit**.
+
+Alternatively, you can trigger the fail-safe by moving your mouse to any corner of the screen.
 
 ## Building a Standalone Executable
 

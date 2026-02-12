@@ -1,2 +1,4 @@
 pyautogui
 pyinstaller
+pystray
+Pillow
